@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PizzaHut DevHub - System Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        code { font-family: 'JetBrains Mono', monospace; }
+        .nav-active { border-bottom: 2px solid #6366f1; color: #4338ca !important; }
+        .file-section { display: none; }
+        .file-section.active { display: block; animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 pb-20">
+
+    <nav class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🍕</span>
+                    <span class="font-bold text-slate-900 tracking-tight">PizzaHut <span class="text-indigo-600">DevHub</span></span>
+                </div>
+                <div class="hidden md:flex space-x-6 h-full items-center" id="topNav">
+                    <button onclick="showPage('index', this)" class="h-full px-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition nav-active">index.php</button>
+                    <button onclick="showPage('menu', this)" class="h-full px-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition">menu.php</button>
+                    <button onclick="showPage('admin', this)" class="h-full px-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition">Admin Tools</button>
+                    <button onclick="showPage('track', this)" class="h-full px-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition">track_order.php</button>
+                    <button onclick="showPage('info', this)" class="h-full px-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition">Info Pages</button>
+                    <button onclick="showPage('auth', this)" class="h-full px-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition">Auth/Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 mt-10">
+        
+        <section id="index" class="file-section active">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-8 border-b border-slate-100 bg-gradient-to-r from-indigo-50 to-white">
+                    <h1 class="text-3xl font-bold text-slate-900 mb-2">index.php (Home)</h1>
+                    <p class="text-slate-600">The gateway for all customers. Manages visual impact and high-level navigation.</p>
+                </div>
+                <div class="p-8 space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-5 bg-slate-50 rounded-xl border border-slate-100">
+                            <h3 class="font-bold text-slate-900 mb-3 text-sm uppercase tracking-wide">Vital Points</h3>
+                            <ul class="text-sm text-slate-600 space-y-3">
+                                <li>• <strong>Dynamic Banner:</strong> Background images switch every 3 seconds via <code>slideInterval</code>.</li>
+                                <li>• <strong>Selective Loading:</strong> Uses <code>LIMIT 8</code> SQL query to prevent slow home page loads.</li>
+                                <li>• <strong>Smart Nav:</strong> Conditionally renders the <strong>Profile Dropdown</strong> or <strong>Login Button</strong> based on session status.</li>
+                            </ul>
+                        </div>
+                        <div class="p-5 bg-indigo-600 rounded-xl text-white">
+                            <h3 class="font-bold mb-3 text-sm uppercase tracking-wide">Core Connections</h3>
+                            <div class="space-y-2 text-sm text-indigo-100">
+                                <p>🔗 <code>db_connection.php</code> &rarr; Populates menu cards.</p>
+                                <p>🔗 <code>Auth.php</code> &rarr; Secure entry for admin tasks.</p>
+                                <p>🔗 <code>menu.php</code> &rarr; Main CTA target.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="file-section">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-8 border-b border-slate-100">
+                    <h1 class="text-3xl font-bold text-slate-900 mb-2">menu.php (Ordering)</h1>
+                    <p class="text-slate-600">The central ordering hub where data selection occurs.</p>
+                </div>
+                <div class="p-8 bg-slate-50/30">
+                    <h3 class="font-bold text-slate-900 mb-4">Functional logic</h3>
+                    <div class="p-4 bg-slate-900 text-indigo-300 rounded-lg text-xs leading-relaxed overflow-x-auto">
+                        <code class="block">
+                            // Vital Logic: UI Personalization<br>
+                            &lt;img src="https://ui-avatars.com/api/?name=&lt;?php echo urlencode($adminName); ?&gt;"&gt;
+                        </code>
+                    </div>
+                    <ul class="mt-4 text-sm text-slate-600 space-y-2">
+                        <li>• <strong>Profile Avatars:</strong> Uses an external API to generate admin initials dynamically.</li>
+                        <li>• <strong>Interactive Selection:</strong> Each pizza card links to a detailed modal view for order finalization.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin" class="file-section">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-8 border-b border-slate-100 bg-red-50/50">
+                    <h1 class="text-3xl font-bold text-slate-900 mb-2">Admin Backend Hub</h1>
+                    <p class="text-slate-600">Controls the internal data of the restaurant.</p>
+                </div>
+                <div class="p-8 space-y-8">
+                    <div>
+                        <h3 class="text-red-600 font-bold mb-2">Dashboard.php</h3>
+                        <p class="text-sm text-slate-600">Displays business health metrics: Total Revenue, Orders Processed, and Top Products.</p>
+                    </div>
+                    <div class="border-t pt-6">
+                        <h3 class="text-red-600 font-bold mb-2">menu_admin.php (CRUD Engine)</h3>
+                        <p class="text-sm text-slate-600 mb-4">Processes all menu modifications:</p>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="p-3 bg-white border rounded-lg text-xs font-bold">IMAGE VALIDATION<br><span class="text-slate-400 font-normal">Limits to jpg, png, webp</span></div>
+                            <div class="p-3 bg-white border rounded-lg text-xs font-bold">SQL PREPARED STMT<br><span class="text-slate-400 font-normal">Prevents Injection</span></div>
+                            <div class="p-3 bg-white border rounded-lg text-xs font-bold">AVAILABILITY TOGGLE<br><span class="text-slate-400 font-normal">Hide/Show items</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="track" class="file-section">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                <h1 class="text-3xl font-bold text-slate-900 mb-4">track_order.php</h1>
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                    <h3 class="font-bold text-indigo-900 mb-2">Status Messaging Logic</h3>
+                    <p class="text-sm text-indigo-800 leading-relaxed italic">
+                        "Checks the 'order_status' column and returns a custom string: 'Preparing', 'Delivered', or 'Cancelled' to the user."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="info" class="file-section">
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                    <h2 class="text-xl font-bold mb-2">About.php</h2>
+                    <p class="text-sm text-slate-600">Static informative page using the shared <code>--font-syne</code> typography for brand consistency.</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                    <h2 class="text-xl font-bold mb-2">Contact.php</h2>
+                    <p class="text-sm text-slate-600">Integrates a contact form with a focus state highlighting (<code>box-shadow: 0 0 0 2px var(--red-500)</code>).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="auth" class="file-section">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                <h1 class="text-3xl font-bold text-slate-900 mb-2">Auth.php & logout.php</h1>
+                <p class="text-sm text-slate-600 mb-6">Security layer for system administration.</p>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-8 h-8 rounded bg-red-100 text-red-600 flex items-center justify-center font-bold">1</div>
+                        <div>
+                            <p class="font-bold text-sm">Session Initialization</p>
+                            <p class="text-xs text-slate-500">Every protected page calls <code>session_start()</code> to check for <code>admin_logged_in</code>.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-8 h-8 rounded bg-red-100 text-red-600 flex items-center justify-center font-bold">2</div>
+                        <div>
+                            <p class="font-bold text-sm">Logout Logic</p>
+                            <p class="text-xs text-slate-500">The <code>logout.php</code> script clears the session array and redirects to the homepage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function showPage(pageId, btn) {
+            // Hide all sections
+            document.querySelectorAll('.file-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show selected
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update top nav buttons
+            document.querySelectorAll('#topNav button').forEach(b => {
+                b.classList.remove('nav-active');
+            });
+            btn.classList.add('nav-active');
+            
+            // Scroll to top
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
